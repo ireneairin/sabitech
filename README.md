@@ -1,2 +1,2 @@
 # sabitech
-Proyecto intermodular - Irene Arastey Casañ, Alma Colomar Gimenez, Ignacio Piedrabuena Martinez
+Proyecto intermodular GRUPO 5 - Irene Arastey Casañ, Alma Colomar Gimenez, Ignacio Piedrabuena Martinez
