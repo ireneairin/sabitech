@@ -4,12 +4,14 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "./assets/vite.svg";
 import "./App.css";
 import { ejemplo } from "./components/ejemplo.jsx";
+import { ListarCharlasButton } from "./components/ListarCharlasButton.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
+    <ListarCharlasButton></ListarCharlasButton>
       <ejemplo></ejemplo>
       <section id="center">
         <div className="hero">
