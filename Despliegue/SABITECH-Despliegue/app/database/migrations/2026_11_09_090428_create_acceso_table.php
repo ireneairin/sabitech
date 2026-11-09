@@ -6,20 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('acceso', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->dateTime('fecha_hora');
+            $table->foreignId('id_usuario')->unique()->constrained('usuario')->cascadeOnDelete();
+            // cascade borra acceso si se borra el usuario       
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('acceso');

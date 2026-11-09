@@ -6,20 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('charla', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('nombre', 150);
+            $table->text('descripcion');
+            $table->string('ponente', 60);
+            $table->string('categoria', 10);
+            $table->date('fecha');
+            $table->time('hora_inicio');
+            $table->time('hora_fin');
+            //crea la clave foranea
+            $table->foreignId('id_sala')->constrained('sala'); //indica que apunta al id de sala
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('charla');
