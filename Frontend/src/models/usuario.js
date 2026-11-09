@@ -1,15 +1,5 @@
 export class Usuario {
-  constructor({
-    id,
-    nombre,
-    apellido,
-    password,
-    ciudad,
-    email,
-    telefono,
-    fecha_registro,
-    rol,
-  }) {
+  constructor({ id, nombre, apellido, password, ciudad, email, telefono, fecha_registro, rol }) {
     this.id = id;
     this.nombre = nombre;
     this.apellido = apellido;

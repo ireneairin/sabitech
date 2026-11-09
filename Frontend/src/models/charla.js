@@ -1,15 +1,5 @@
 export class Charla {
-  constructor({
-    id,
-    nombre,
-    descripcion,
-    ponente,
-    categoria,
-    fecha,
-    hora_inicio,
-    hora_fin,
-    id_sala,
-  }) {
+  constructor({ id, nombre, descripcion, ponente, categoria, fecha, hora_inicio, hora_fin, id_sala }) {
     this.id = id;
     this.nombre = nombre;
     this.descripcion = descripcion;
