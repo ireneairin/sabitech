@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class CharlaController extends Controller
 {
-    public function index(): JsonResponse
+    public function list(): JsonResponse
     {
         $charlas = Charla::with(['ponente', 'sala'])
             ->withCount('reservasConfirmadas')
