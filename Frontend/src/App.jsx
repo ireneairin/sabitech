@@ -9,10 +9,14 @@ import { ListarCharlasButton } from "./components/ListarCharlasButton.jsx";
 function App() {
   const [count, setCount] = useState(0);
 
+  function printConsola() {
+    console.log('He clickado en el hijo.')
+  }
+
   return (
     <>
     <ListarCharlasButton></ListarCharlasButton>
-      <ejemplo></ejemplo>
+      <ejemplo nombre='Adrián' clickar={printConsola}></ejemplo>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
