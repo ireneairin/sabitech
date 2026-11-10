@@ -4,13 +4,19 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "./assets/vite.svg";
 import "./App.css";
 import { ejemplo } from "./components/ejemplo.jsx";
+import { ListarCharlasButton } from "./components/ListarCharlasButton.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
 
+  function printConsola() {
+    console.log('He clickado en el hijo.')
+  }
+
   return (
     <>
-      <ejemplo></ejemplo>
+    <ListarCharlasButton></ListarCharlasButton>
+      <ejemplo nombre='Adrián' clickar={printConsola}></ejemplo>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
