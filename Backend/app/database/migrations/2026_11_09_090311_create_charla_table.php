@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('charla', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 150);
-            $table->text('descripcion');
+            $table->text('descripcion',255);
             $table->string('ponente', 60);
             $table->string('categoria', 10);
             $table->date('fecha');
