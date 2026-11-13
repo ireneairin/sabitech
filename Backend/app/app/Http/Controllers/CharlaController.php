@@ -81,7 +81,8 @@ class CharlaController extends Controller
         if (!$charla) {
             return response()->json(['mensaje' => 'Charla no encontrada'], 404);
         }
-        $charla->delete();
+  
+        $deleted = DB::table('charla')->where('id', $id)->delete();
 
         return response()->json(['mensaje' => 'Charla eliminada exitosamente'], 200);
     }

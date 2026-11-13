@@ -12,7 +12,6 @@ class CharlaSeeder extends Seeder
 
     public function run(): void
     {
-
         //charla de prueba
         Charla::create([
             'titulo' => 'Prueba1',
