@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Charla;
+use App\Models\Sala;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,26 +11,20 @@ use Illuminate\Support\Facades\DB;
 class CharlaController extends Controller
 {
     //listar todas las charlas
-    public function index(): JsonResponse
+    public function list(): JsonResponse
     {
-        $charlas = DB::table('charla')
-            ->select('id', 'nombre', 'descripcion', 'ponente', 'categoria', 'fecha', 'hora_inicio', 'hora_fin', 'id_sala')
-            ->orderBy('id');
-            ->get();
+        $charlas = Charla::all();
         return response()->json(['data' => $charlas], 200);
     }
 
     //buscar por id de charla
     public function idCharla(Request $idCharla): JsonResponse
     {
-        $charlas = DB::table('charla')
-            ->select('id', 'nombre', 'descripcion', 'ponente', 'categoria', 'fecha', 'hora_inicio', 'hora_fin', 'id_sala')
-            ->where('id', $idCharla)
-            ->get();
+        $charla = Charla::find($id);
         if ($charla) {
             return response()->json(['data' => $charla], 200);
         }
-        return response()->json(['message' => 'Charla no encontrada'], 404);
+        return response()->json(['mensaje' => 'Charla no encontrada'], 404);
     }
 
     //crear charla
@@ -43,6 +38,7 @@ class CharlaController extends Controller
             'fecha' => 'required|date',
             'hora_inicio' => 'required|date_format:H:i',
             'hora_fin' => 'required|date_format:H:i',
+            'id_sala' => 'required|exists:sala,id'
         ]);
 
         // validar que existe gestor empleado 
@@ -71,7 +67,7 @@ class CharlaController extends Controller
             ->first(); // busca el primer registro que coincida con el id
     
             if(!$id){
-                return response()->json(['message' => 'Charla no encontrada'], 404);
+                return response()->json(['mensaje' => 'Charla no encontrada'], 404);
             }
             return response()->json(['mensaje' => 'Charla creada exitosamente'], 201);
 
@@ -83,11 +79,11 @@ class CharlaController extends Controller
         // Verificar si la charla existe
         $charla = Charla::find($id);
         if (!$charla) {
-            return response()->json(['message' => 'Charla no encontrada'], 404);
+            return response()->json(['mensaje' => 'Charla no encontrada'], 404);
         }
         $charla->delete();
 
-        return response()->json(['message' => 'Charla eliminada exitosamente'], 200);
+        return response()->json(['mensaje' => 'Charla eliminada exitosamente'], 200);
     }
 
     //modificar charla
@@ -101,11 +97,12 @@ class CharlaController extends Controller
             'fecha' => 'required|date',
             'hora_inicio' => 'required|date_format:H:i',
             'hora_fin' => 'required|date_format:H:i',
+            'id_sala' => 'required|exists:sala,id'
         ]);
 
         $charla = Charla::find($id);
         if (!$charla) {
-            return response()->json(['message' => 'Charla no encontrada'], 404);
+            return response()->json(['mensaje' => 'Charla no encontrada'], 404);
         }
 
         $charla->update($datos);
