@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Route;
 
 //CRUD de charlas
 Route::get('/charlas', [CharlaController::class, 'list']);
-Route::get('/charlas/{id}', [CharlaController::class, 'idCharla']);
 Route::post('/charlas', [CharlaController::class, 'crearCharla']);
-Route::delete('/charlas/{id}', [CharlaController::class, 'eliminarCharla']);
+Route::get('/charlas/{id}', [CharlaController::class, 'idCharla']);
 Route::put('/charlas/{id}', [CharlaController::class, 'modificarCharla']);
+Route::delete('/charlas/{id}', [CharlaController::class, 'eliminarCharla']);
 
 Route::get('/salas', [SalaController::class, 'list']);
 Route::get('/salas/{id}', [SalaController::class, 'idSala']);
