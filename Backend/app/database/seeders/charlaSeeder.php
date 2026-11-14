@@ -14,11 +14,11 @@ class CharlaSeeder extends Seeder
     {
         //charla de prueba
         Charla::create([
-            'titulo' => 'Prueba1',
+            'nombre' => 'Prueba1',
             'descripcion' => 'Esto es una prueba',
             'ponente' => 'Alma',
             'categoria' => 'Tech',
-            'fecha' => '18/06/2024',
+            'fecha' => '2024-06-18',
             'hora_inicio' => '12:00',
             'hora_fin' => '13:00',
             'id_sala' => 1

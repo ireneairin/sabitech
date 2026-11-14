@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Models;
+
+use Database\Factories\UserFactory;
+Use Illuminate\Datablase\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class Sala extends Model
+{
+    protected $table = 'sala';
+    public $timestamps = false;
+    protected $fillable = ['nombre', 'aforo', 'ubicacion'];
+
+    //una charla pertenece a una sala (1, n)
+    public function sala(): BelongsTo
+    {
+        return $this->belongsTo(Sala::class, 'id_sala');
+    }
+
+    // tabla intermedia (n, n) entre charlas y usuarios (asistentes)
+    protected function asistentes(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'asiste', 'id_charla', 'id_usuario');
+    }
+
+    // tabla intermedia (n, n) entre charlas y usuarios (gestiona)
+    protected function gestores(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'gestiona', 'id_charla', 'id_usuario');
+    }
+
+    // tabla intermedia (n, n) entre charlas y usuarios (imparte)
+    protected function ponentes(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'imparte', 'id_charla', 'id_usuario');
+    }
+
+}
