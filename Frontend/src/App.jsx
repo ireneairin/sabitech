@@ -3,11 +3,12 @@ import heroImg from "./assets/hero.png";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "./assets/vite.svg";
 import "./App.css";
-import { ejemplo } from "./components/ejemplo.jsx";
 import { ListarCharlasButton } from "./components/ListarCharlasButton.jsx";
+import { CharlasView } from './views/CharlasView.jsx';
 
 function App() {
-  const [count, setCount] = useState(0);
+  return <CharlasView />;
+  /*const [count, setCount] = useState(0);
 
   function printConsola() {
     console.log('He clickado en el hijo.')
@@ -124,7 +125,7 @@ function App() {
       <div className="ticks"></div>
       <section id="spacer"></section>
     </>
-  );
+  );*/
 }
 
 export default App;
