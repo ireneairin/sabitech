@@ -40,11 +40,16 @@ class ReservaController extends Controller
             'id_usuario' => 'required|exists:usuario,id',
         ]);
 
-        // El QR lo genera el servidor
+        // El QR lo genera el servidor (el cliente podría falsificarlo)
         // Str::uuid() crea un identificador único; la columna qr es unique
-        $datos['qr'] = (string) Str::uuid();
+        $reserva = Reserva::create([
+            ...$datos,  // fecha_reserva e id_usuario ya validados
+            'qr' => (string) Str::uuid(),
+        ]);
 
-        $reserva = Reserva::create($datos);
+        /*$datos['qr'] = (string) Str::uuid();
+
+        $reserva = Reserva::create($datos);*/
 
         // refresh() para que aparezca estado = 'activa' (lo pone MySQL)
         return response()->json([

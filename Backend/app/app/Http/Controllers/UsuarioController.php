@@ -75,6 +75,8 @@ class UsuarioController extends Controller
     }
 
     // Si recibe un id es que estamos MODIFICANDO
+    // crearUsuario llama a $this->reglas() sin id -- crea y asigna un nuevo id
+    // modificarUsuario llama a $this->reglas($id) con id -- modifica la info del id
     private function reglas(?int $id = null): array
     {
         // El email debe ser único salvo para el propio usuario al modificarlo
@@ -86,7 +88,7 @@ class UsuarioController extends Controller
         return [
             'nombre' => 'required|string|max:50',
             'apellido' => 'required|string|max:60',
-            'password' => ($id ? 'sometimes' : 'required') . '|string|min:8',
+            'password' => ($id ? 'sometimes' : 'required') . '|string|min:8', // sometimes (modificar otra info o la pswd): solo se valida el campo si viene en la petición, si no se salta ;; required (crear pswd): el campo tiene que venir y no estar vacío
             'ciudad' => 'required|string|max:60',
             'email' => ['required', 'email', 'max:255', $email],
             'telefono' => 'nullable|string|max:20',

@@ -34,7 +34,7 @@ class AccesoController extends Controller
     public function registrarAcceso(Request $request): JsonResponse
     {
         $datos = $request->validate([
-            'id_usuario' => 'required|exists:usuario,id',
+            'id_usuario' => 'required|exists:usuario,id', // required: campo id_usuario tiene que venir en el cuerpo de la petición ;; exists:usuario,id (formato exists:tabla,columna - usuario es el nombre de la tabla, no del modelo): 'tiene que existir una fila en la tabla usuario cuya columna id valga eso'
         ]);
 
         // "Si ya hay un acceso de este usuario, actualiza la fecha; si no, créalo."
