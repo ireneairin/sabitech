@@ -23,11 +23,16 @@ class Charla extends Model
         'id_sala',
     ];
 
+    // Una charla pertenece a UNA sala (la clave foránea id_sala está en esta tabla)
     public function sala(): BelongsTo
     {
         return $this->belongsTo(Sala::class, 'id_sala');
     }
 
+    // ---- Relaciones N a N con usuario, a través de tablas intermedias ----
+    // belongsToMany(modelo, tabla intermedia, clave de ESTE modelo, clave del OTRO modelo)
+
+    // Usuarios que asisten a la charla (tabla "asiste")
     public function asistentes(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -38,6 +43,7 @@ class Charla extends Model
         );
     }
 
+    // Usuarios que gestionan la charla (tabla "gestiona")
     public function gestores(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -48,6 +54,7 @@ class Charla extends Model
         );
     }
 
+    // Usuarios que imparten la charla (tabla "imparte")
     public function ponentes(): BelongsToMany
     {
         return $this->belongsToMany(
