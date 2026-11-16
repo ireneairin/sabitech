@@ -12,11 +12,20 @@ return new class extends Migration
             $table->id();
             $table->string('estado')->default('activa');
             $table->dateTime('fecha_reserva');
-            $table->string('qr')->unique();
-            $table->foreignId('id_usuario')->constrained('usuario')->cascadeOnDelete();
+            $table->string('qr')->nullable()->unique();
+
+            $table->foreignId('id_usuario')
+                ->constrained('usuario')
+                ->cascadeOnDelete();
+
+            $table->foreignId('id_charla')
+                ->constrained('charla')
+                ->cascadeOnDelete();
+
+            $table->unique(['id_usuario', 'id_charla']);
         });
     }
-    
+
     public function down(): void
     {
         Schema::dropIfExists('reserva');
