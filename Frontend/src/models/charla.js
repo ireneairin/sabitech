@@ -1,7 +1,18 @@
-import { Sala } from './sala.js';
+import { Sala } from "./sala.js";
 
 export class Charla {
-  constructor({ id, nombre, descripcion, ponente, categoria, fecha, hora_inicio, hora_fin, id_sala }) {
+  constructor({
+    id,
+    nombre,
+    descripcion,
+    ponente,
+    categoria,
+    fecha,
+    hora_inicio,
+    hora_fin,
+    id_sala,
+    sala,
+  }) {
     this.id = id;
     this.nombre = nombre;
     this.descripcion = descripcion;
@@ -11,6 +22,7 @@ export class Charla {
     this.hora_inicio = hora_inicio;
     this.hora_fin = hora_fin;
     this.id_sala = id_sala;
+    this.sala = sala;
   }
 
   static fromJSON(json) {
@@ -23,7 +35,8 @@ export class Charla {
       fecha: json.fecha,
       hora_inicio: json.hora_inicio,
       hora_fin: json.hora_fin,
-      id_sala: json.sala ? Sala.fromJSON(json.sala) : null,
+      id_sala: json.id_sala,
+      sala: json.sala ? Sala.fromJSON(json.sala) : null,
     });
   }
 
@@ -38,6 +51,7 @@ export class Charla {
       hora_inicio: this.hora_inicio,
       hora_fin: this.hora_fin,
       id_sala: this.id_sala,
+      sala: this.sala ? this.sala.toJSON() : null,
     };
   }
 }
