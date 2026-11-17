@@ -5,7 +5,19 @@ function recortarHora(hora) {
     return hora ? hora.slice(0, 5) : '';
 }
 
-export default function CharlasView() {
+function formatearFecha(fecha) {
+    return new Date(fecha).toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    });
+}
+
+function hacerReserva() {
+    console.log('Reserva hecha')
+}
+
+export default function CharlasView({ onNavigate, onSelectCharla }) {
     // Tres estados: los datos, si estamos cargando y si hubo error
     const [charlas, setCharlas] = useState([]);
     const [cargando, setCargando] = useState(true);
@@ -44,11 +56,17 @@ export default function CharlasView() {
                 {charlas.map((charla) => (
                     <li key={charla.id} style={{ border: '1px solid #ccc', borderRadius: 8, padding: 16, margin: '12px 0', textAlign: 'left' }}>
                         <h2 style={{ margin: 0 }}>{charla.nombre}</h2>
-                        <p><strong>{charla.categoria}</strong> · {charla.ponente}</p>
-                        <p>{charla.descripcion}</p>
+                        <p>Categoría: {charla.categoria} · Ponente: {charla.ponente}</p>
+                        <p>Descripción: {charla.descripcion}</p>
                         <p>
-                            📅 {charla.fecha} · 🕒 {recortarHora(charla.hora_inicio)} - {recortarHora(charla.hora_fin)}
+                            Fecha: {formatearFecha(charla.fecha)} · Hora: {recortarHora(charla.hora_inicio)} - {recortarHora(charla.hora_fin)}
                             {charla.sala ? <> · 📍 {charla.sala.nombre} </> : null}
+                        </p>
+                        <p>
+                            <button
+                                onClick={() => onSelectCharla(charla)}
+                                style={{ padding: '8px 16px', background: '#1a73e8', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 600 }}
+                            >Reserva</button>
                         </p>
                     </li>
                 ))}

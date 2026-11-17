@@ -4,7 +4,7 @@ export default function Navbar({ currentView, onNavigate }) {
 	return (
 		<header className='navbar-sbt'>
 			<div className='navbar-sbt__container'>
-				{/* Logo y Marca */}
+				{/* Logo (izquierda) */}
 				<button 
 					onClick={() => onNavigate('home')} 
 					className='navbar-sbt__brand'
@@ -13,7 +13,7 @@ export default function Navbar({ currentView, onNavigate }) {
 					<img src={logo} alt='Sabitech Logo' className='navbar-sbt__logo-img' />
 				</button>
 
-				{/* Enlaces de navegación centrales */}
+				{/* Enlaces de navegación (centro) */}
 				<nav className='navbar-sbt__nav'>
 					<button
 						onClick={() => onNavigate('home')}
@@ -35,7 +35,7 @@ export default function Navbar({ currentView, onNavigate }) {
 					</button>
 				</nav>
 
-				{/* Botones de Acceso / Registro de la derecha */}
+				{/* Botones de acceso/registro (derecha) */}
 				<div className='navbar-sbt__actions'>
 					<button 
 						onClick={() => onNavigate('login')} 
