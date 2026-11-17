@@ -1,8 +1,8 @@
 import { Charla } from '../models/charla.js';
 import { ApiError } from './apiError.js';
 import { Page } from '../models/page.js';
+import { API_BASE_URL } from './config.js';
 
-const API_BASE_URL = 'http://localhost:8080/api'; // Parte común en una variable de entorno
 const CHARLAS_URL = `${API_BASE_URL}/charlas`;
 
 export async function list() { // Sin método es get por defecto

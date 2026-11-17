@@ -1,6 +1,6 @@
 import logo from '../assets/logoSabitechFINAL.png';
 
-export default function Navbar({ currentView, onNavigate }) {
+export default function Navbar({ currentView, onNavigate, usuario, onLogout }) {
 	return (
 		<header className='navbar-sbt'>
 			<div className='navbar-sbt__container'>
@@ -27,6 +27,17 @@ export default function Navbar({ currentView, onNavigate }) {
 					>
 						Charlas
 					</button>
+
+					{/* Botón visible SOLO cuando has iniciado sesión */}
+					{usuario && (
+						<button
+							onClick={() => onNavigate('mis-charlas')}
+							className={`navbar-sbt__link ${currentView === 'mis-charlas' ? 'is-active' : ''}`}
+						>
+							Mis charlas
+						</button>
+					)}
+
 					<button
 						onClick={() => onNavigate('sobre-nosotros')}
 						className={`navbar-sbt__link ${currentView === 'sobre-nosotros' ? 'is-active' : ''}`}
@@ -35,20 +46,36 @@ export default function Navbar({ currentView, onNavigate }) {
 					</button>
 				</nav>
 
-				{/* Botones de acceso/registro (derecha) */}
+				{/* Botones de acceso/registro o sesión iniciada (derecha) */}
 				<div className='navbar-sbt__actions'>
-					<button 
-						onClick={() => onNavigate('login')} 
-						className='btn btn--outline-light'
-					>
-						Acceder
-					</button>
-					<button 
-						onClick={() => onNavigate('registro')} 
-						className='btn btn--primary-solid'
-					>
-						Crear cuenta
-					</button>
+					{usuario ? (
+						<div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+							<span style={{ fontWeight: '500' }}>
+								Hola, {usuario.nombre}
+							</span>
+							<button 
+								onClick={onLogout} 
+								className='btn btn--outline-light'
+							>
+								Cerrar sesión
+							</button>
+						</div>
+					) : (
+						<>
+							<button 
+								onClick={() => onNavigate('login')} 
+								className='btn btn--outline-light'
+							>
+								Acceder
+							</button>
+							<button 
+								onClick={() => onNavigate('registro')} 
+								className='btn btn--primary-solid'
+							>
+								Crear cuenta
+							</button>
+						</>
+					)}
 				</div>
 			</div>
 		</header>

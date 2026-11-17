@@ -15,9 +15,9 @@ class DatabaseSeeder extends Seeder
             UsuarioSeeder::class,
             // Dependen de sala y/o usuario
             CharlaSeeder::class,
+            ReservaSeeder::class,
             AccesoSeeder::class,
             ConsultaSeeder::class,
-            ReservaSeeder::class,
             // Tablas intermedias (dependen de charla y usuario)
             AsisteSeeder::class,
             GestionaSeeder::class,

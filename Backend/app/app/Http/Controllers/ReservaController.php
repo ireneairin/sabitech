@@ -36,17 +36,29 @@ class ReservaController extends Controller
     public function crearReserva(Request $request): JsonResponse
     {
         $datos = $request->validate([
-            'fecha_reserva' => 'required|date',
-            'id_usuario' => 'required|exists:usuario,id',
+            'id_charla' => 'required|exists:charla,id',
         ]);
+
+        $idUsuario = $request->user()->id;
+
+        // Evitar que el usuario reserve dos veces la misma charla si ya la tiene activa
+        $yaReservada = Reserva::where('id_usuario', $idUsuario)
+            ->where('id_charla', $datos['id_charla'])
+            ->where('estado', 'activa')
+            ->exists();
+
+        if ($yaReservada) {
+            return response()->json(['mensaje' => 'Ya tienes una reserva activa para esta charla'], 409);
+        }
 
         // El QR lo genera el servidor (el cliente podría falsificarlo)
         // Str::uuid() crea un identificador único; la columna qr es unique
         $reserva = Reserva::create([
-            ...$datos,  // fecha_reserva e id_usuario ya validados
-            'qr' => (string) Str::uuid(),
+            'id_usuario'    => $idUsuario,
+            'id_charla'     => $datos['id_charla'],
+            'fecha_reserva' => now(),
+            'qr'            => (string) Str::uuid(),
         ]);
-
         /*$datos['qr'] = (string) Str::uuid();
 
         $reserva = Reserva::create($datos);*/
@@ -91,5 +103,15 @@ class ReservaController extends Controller
         $reserva->delete();
 
         return response()->json(['mensaje' => 'Reserva eliminada correctamente'], 200);
+    }
+
+    public function misReservas(Request $request): JsonResponse
+    {
+        $reservas = Reserva::with('charla')
+            ->where('id_usuario', $request->user()->id)
+            ->orderByDesc('fecha_reserva')
+            ->get();
+
+        return response()->json(['data' => $reservas], 200);
     }
 }

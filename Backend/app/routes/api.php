@@ -9,6 +9,7 @@ use App\Http\Controllers\ImparteController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\SalaController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 // Formato:  Route::MÉTODO('/url', [Controlador::class, 'método']);
@@ -80,3 +81,18 @@ Route::post('/charlas/{idCharla}/ponentes', [ImparteController::class, 'agregar'
     ->whereNumber('idCharla');
 Route::delete('/charlas/{idCharla}/ponentes/{idUsuario}', [ImparteController::class, 'quitar'])
     ->whereNumber(['idCharla', 'idUsuario']);
+
+    // ---------------- AUTENTICACIÓN ----------------
+Route::post('/login', [AuthController::class, 'login']);
+
+// ---------------- RESERVAS Y SESIÓN (Protegidas con Token) ----------------
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::get('/mis-reservas', [ReservaController::class, 'misReservas']);
+    Route::get('/reservas', [ReservaController::class, 'list']);
+    Route::get('/reservas/{id}', [ReservaController::class, 'idReserva'])->whereNumber('id');
+    Route::post('/reservas', [ReservaController::class, 'crearReserva']);
+    Route::put('/reservas/{id}', [ReservaController::class, 'modificarReserva'])->whereNumber('id');
+    Route::delete('/reservas/{id}', [ReservaController::class, 'eliminarReserva'])->whereNumber('id');
+});

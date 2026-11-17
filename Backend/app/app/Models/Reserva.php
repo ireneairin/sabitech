@@ -18,11 +18,17 @@ class Reserva extends Model
         'fecha_reserva',
         'qr',
         'id_usuario',
+        'id_charla',
     ];
 
     // Una reserva pertenece a UN usuario
     public function usuario(): BelongsTo
     {
         return $this->belongsTo(Usuario::class, 'id_usuario');
+    }
+
+    public function charla(): BelongsTo
+    {
+        return $this->belongsTo(Charla::class, 'id_charla');
     }
 }
