@@ -1,3 +1,5 @@
+import logo from '../assets/logoSabitechFINAL.png';
+
 export default function Footer() {
 	return (
 		<footer className='footer'>

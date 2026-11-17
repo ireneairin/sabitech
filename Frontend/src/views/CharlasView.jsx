@@ -5,7 +5,7 @@ function recortarHora(hora) {
     return hora ? hora.slice(0, 5) : '';
 }
 
-export function CharlasView() {
+export default function CharlasView() {
     // Tres estados: los datos, si estamos cargando y si hubo error
     const [charlas, setCharlas] = useState([]);
     const [cargando, setCargando] = useState(true);

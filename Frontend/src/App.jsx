@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Navbar from './components/Navbar.jsx';
 import Home from './views/Home.jsx';
-import Charlas from './views/Charlas.jsx';
-import Login from './views/Login.jsx';
+import Charlas from './views/CharlasView.jsx';
+import Login from './views/LoginView.jsx';
 
 export default function App() {
 	// Estado para saber qué vista está abierta ('home', 'charlas', 'sobre-nosotros', 'login', 'registro')
