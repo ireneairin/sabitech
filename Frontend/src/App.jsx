@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Navbar from './components/Navbar.jsx';
-import Home from './views/Home.jsx';
+import Footer from './components/Footer.jsx';
+import Main from './views/HomeView.jsx';
 import Charlas from './views/CharlasView.jsx';
 import Login from './views/LoginView.jsx';
 import Reserva from './views/ReservaView.jsx';
@@ -49,7 +50,7 @@ export default function App() {
 	const renderView = () => {
 		switch (currentView) {
 			case 'home':
-				return <Home onNavigate={setCurrentView} />;
+				return <Main onNavigate={setCurrentView} usuario={usuario} />;
 			case 'charlas':
 				return (
 					<Charlas
@@ -75,7 +76,7 @@ export default function App() {
 					/>
 				);
 			case 'sobre-nosotros':
-				return <div style={{ padding: '40px' }}><h2>Sobre nosotros</h2><p>Información corporativa de Sabitech.</p></div>;
+				return <Home onNavigate={setCurrentView} usuario={usuario} />;
 			case 'login':
 				return <Login onLoginSuccess={handleLoginSuccess} onNavigate={setCurrentView} />;
 			case 'registro':
@@ -89,12 +90,12 @@ export default function App() {
 					/>
 				);
 			default:
-				return <Home onNavigate={setCurrentView} />;
+				return <Main onNavigate={setCurrentView} />;
 		}
 	};
 
 	return (
-		<div className='app-layout' style={{ backgroundColor: '#ffffff', minHeight: '100vh' }}>
+		<div className='app-layout' style={{ backgroundColor: '#ffffff', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
 			<Navbar
 				currentView={currentView}
 				onNavigate={setCurrentView}
@@ -102,9 +103,11 @@ export default function App() {
 				onLogout={handleLogout}
 			/>
 
-			<main className='app-main'>
+			<main className='app-main' style={{ flex: 1 }}>
 				{renderView()}
 			</main>
+
+			<Footer />
 		</div>
 	);
 }
