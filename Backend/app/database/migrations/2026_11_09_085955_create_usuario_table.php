@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('nombre', 50);
             $table->string('apellido', 60);
             $table->string('password');
+            $table->string('api_token', 80)->nullable()->unique();
             $table->string('ciudad', 60);
             $table->string('email')->unique();
             $table->string('telefono', 20)->nullable();

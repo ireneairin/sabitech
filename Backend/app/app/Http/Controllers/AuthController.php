@@ -6,6 +6,7 @@ use App\Models\Usuario;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -25,7 +26,9 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $token = $usuario->createToken('auth_token')->plainTextToken;
+        $token = Str::random(60);
+        $usuario->api_token = hash('sha256', $token);
+        $usuario->save();
 
         return response()->json([
             'token'   => $token,

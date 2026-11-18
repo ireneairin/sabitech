@@ -82,11 +82,11 @@ Route::post('/charlas/{idCharla}/ponentes', [ImparteController::class, 'agregar'
 Route::delete('/charlas/{idCharla}/ponentes/{idUsuario}', [ImparteController::class, 'quitar'])
     ->whereNumber(['idCharla', 'idUsuario']);
 
-    // ---------------- AUTENTICACIÓN ----------------
+// ---------------- AUTENTICACIÓN ----------------
 Route::post('/login', [AuthController::class, 'login']);
 
 // ---------------- RESERVAS Y SESIÓN (Protegidas con Token) ----------------
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/mis-reservas', [ReservaController::class, 'misReservas']);
