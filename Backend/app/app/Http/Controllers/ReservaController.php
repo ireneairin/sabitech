@@ -42,26 +42,47 @@ class ReservaController extends Controller
         $idUsuario = $request->user()->id;
 
         // Evitar que el usuario reserve dos veces la misma charla si ya la tiene activa
-        $yaReservada = Reserva::where('id_usuario', $idUsuario)
+        /*$yaReservada = Reserva::where('id_usuario', $idUsuario)
             ->where('id_charla', $datos['id_charla'])
             ->where('estado', 'activa')
             ->exists();
 
         if ($yaReservada) {
             return response()->json(['mensaje' => 'Ya tienes una reserva activa para esta charla'], 409);
+        }*/
+        $existente = Reserva::where('id_usuario', $idUsuario)
+            ->where('id_charla', $datos['id_charla'])
+            ->first();
+
+        if ($existente && $existente->estado === 'activa') {
+            return response()->json(['mensaje' => 'Ya tienes una reserva activa para esta charla.'], 409);
+        }
+
+        if ($existente) {
+            // Estaba cancelada; la reactivamos (la base de datos no permite dos filas usuario+charla)
+            $existente->update([
+                'estado' => 'activa',
+                'fecha_reserva' => now(),
+                'qr' => (string) Str::uuid(),
+            ]);
+            $reserva = $existente;
+        } else {
+            $reserva = Reserva::create([
+                'id_usuario' => $idUsuario,
+                'id_charla' => $datos['id_charla'],
+                'fecha_reserva' => now(),
+                'qr' => (string) Str::uuid(),
+            ]);
         }
 
         // El QR lo genera el servidor (el cliente podría falsificarlo)
         // Str::uuid() crea un identificador único; la columna qr es unique
-        $reserva = Reserva::create([
-            'id_usuario'    => $idUsuario,
-            'id_charla'     => $datos['id_charla'],
-            'fecha_reserva' => now(),
-            'qr'            => (string) Str::uuid(),
-        ]);
-        /*$datos['qr'] = (string) Str::uuid();
-
-        $reserva = Reserva::create($datos);*/
+        // $reserva = Reserva::create([
+        //     'id_usuario' => $idUsuario,
+        //     'id_charla' => $datos['id_charla'],
+        //     'fecha_reserva' => now(),
+        //     'qr' => (string) Str::uuid(),
+        // ]);
 
         // refresh() para que aparezca estado = 'activa' (lo pone MySQL)
         return response()->json([
@@ -77,6 +98,10 @@ class ReservaController extends Controller
 
         if (!$reserva) {
             return response()->json(['mensaje' => 'Reserva no encontrada'], 404);
+        }
+
+        if ((int) $reserva->id_usuario !== (int) $request->user()->id) {
+            return response()->json(['mensaje' => 'No puedes modificar esta reserva'], 403);
         }
 
         $datos = $request->validate([
@@ -109,6 +134,7 @@ class ReservaController extends Controller
     {
         $reservas = Reserva::with('charla')
             ->where('id_usuario', $request->user()->id)
+            ->where('estado', 'activa')
             ->orderByDesc('fecha_reserva')
             ->get();
 
