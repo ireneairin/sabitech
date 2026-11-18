@@ -47,7 +47,7 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
             setMisReservas([]);
             return;
         }
-
+        // Recuperas el token que guardaste al hacer login (ej: en localStorage)
         const token = localStorage.getItem('token');
         fetch(`${API_BASE_URL}/mis-reservas`, {
             headers: {
@@ -61,7 +61,7 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
     }, [usuario, soloMisCharlas]);
 
     // Comprobar si una charla concreta ya está reservada por el usuario
-   const estaReservada = (idCharla) => {
+    const estaReservada = (idCharla) => {
         return misReservas.some((reserva) => {
             const idReservado = reserva.id_charla ?? reserva.charla?.id;
             return Number(idReservado) === Number(idCharla);

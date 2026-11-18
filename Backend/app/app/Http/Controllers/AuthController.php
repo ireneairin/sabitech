@@ -26,6 +26,7 @@ class AuthController extends Controller
             ], 401);
         }
 
+        // Generar un token aleatorio nativo y guardarlo en la columna api_token
         $token = Str::random(60);
         $usuario->api_token = hash('sha256', $token);
         $usuario->save();
@@ -35,13 +36,29 @@ class AuthController extends Controller
             'data'    => $usuario,
             'mensaje' => 'Sesión iniciada correctamente',
         ], 200);
+
+        // Autenticar mediante sesión nativa de Laravel
+        /*Auth::login($usuario);
+        $request->session()->regenerate();
+
+        return response()->json([
+            'data'    => $usuario,
+            'mensaje' => 'Sesión iniciada correctamente',
+        ], 200);*/
     }
 
     // POST /api/logout
     public function logout(Request $request): JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
-
+        $usuario = $request->user();
+        $usuario->api_token = null;
+        $usuario->save();
+        //$request->user()->currentAccessToken()->delete();
+        /*Auth::guard('web')->logout();*/
+        /*Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        */
         return response()->json([
             'mensaje' => 'Sesión cerrada correctamente'
         ], 200);

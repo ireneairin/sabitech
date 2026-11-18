@@ -49,11 +49,11 @@ Route::put('/consultas/{id}', [ConsultaController::class, 'modificarConsulta'])-
 Route::delete('/consultas/{id}', [ConsultaController::class, 'eliminarConsulta'])->whereNumber('id');
 
 // ---------------- RESERVAS ----------------
-Route::get('/reservas', [ReservaController::class, 'list']);
+/*Route::get('/reservas', [ReservaController::class, 'list']);
 Route::get('/reservas/{id}', [ReservaController::class, 'idReserva'])->whereNumber('id');
 Route::post('/reservas', [ReservaController::class, 'crearReserva']);
 Route::put('/reservas/{id}', [ReservaController::class, 'modificarReserva'])->whereNumber('id');
-Route::delete('/reservas/{id}', [ReservaController::class, 'eliminarReserva'])->whereNumber('id');
+Route::delete('/reservas/{id}', [ReservaController::class, 'eliminarReserva'])->whereNumber('id');*/
 
 // ---------------- TABLAS INTERMEDIAS (charla <-> usuario) ----------------
 // Los parámetros se pasan al método por ORDEN: {idCharla} primero, {idUsuario} después.
@@ -86,7 +86,7 @@ Route::delete('/charlas/{idCharla}/ponentes/{idUsuario}', [ImparteController::cl
 Route::post('/login', [AuthController::class, 'login']);
 
 // ---------------- RESERVAS Y SESIÓN (Protegidas con Token) ----------------
-Route::middleware('auth:api')->group(function () {
+Route::middleware('auth:api')->group(function () { /*auth:api*/
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/mis-reservas', [ReservaController::class, 'misReservas']);

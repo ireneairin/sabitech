@@ -25,6 +25,7 @@ class Usuario extends Authenticatable
 
     protected $hidden = [
         'password',
+        'api_token',
     ];
 
     protected function casts(): array
