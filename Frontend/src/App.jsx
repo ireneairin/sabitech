@@ -10,6 +10,7 @@ import { API_BASE_URL } from './api/config.js';
 export default function App() {
 	const [currentView, setCurrentView] = useState('home');
 	const [charlaSeleccionada, setCharlaSeleccionada] = useState(null);
+	const [cerrandoSesion, setCerrandoSesion] = useState(false);
 
 	// Estado del usuario logueado (lee de localStorage al arrancar)
 	const [usuario, setUsuario] = useState(() => {
@@ -31,6 +32,10 @@ export default function App() {
 
 	// Cerrar sesión
 	const handleLogout = async () => {
+		if (cerrandoSesion) return;
+
+		setCerrandoSesion(true);
+
 		const token = localStorage.getItem('token');
 		if (token) {
 			await fetch(`${API_BASE_URL}/logout`, {
@@ -39,12 +44,14 @@ export default function App() {
 					'Authorization': `Bearer ${token}`,
 					'Accept': 'application/json'
 				}
-			}).catch(() => {});
+			}).catch(() => { });
 		}
+
 		localStorage.removeItem('token');
 		localStorage.removeItem('usuario');
 		setUsuario(null);
 		setCurrentView('home');
+		setCerrandoSesion(false);
 	};
 
 	const renderView = () => {
@@ -101,6 +108,7 @@ export default function App() {
 				onNavigate={setCurrentView}
 				usuario={usuario}
 				onLogout={handleLogout}
+				cerrandoSesion={cerrandoSesion}
 			/>
 
 			<main className='app-main' style={{ flex: 1 }}>

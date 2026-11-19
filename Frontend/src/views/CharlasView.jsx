@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { list } from '../api/charlaApi.js';
 import Modal from '../components/Modal.jsx';
 import logo from '../assets/logoSabitechFINAL.png';
+import qr from '../assets/QR_pruebas.png';
 import { API_BASE_URL } from '../api/config.js';
 
 function recortarHora(hora) {
@@ -330,10 +331,10 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
                     </p>
 
                     <div style={{ display: 'inline-block', padding: '16px', border: '1px solid #e2e8f0', borderRadius: '12px', backgroundColor: '#fff' }}>
-                        <img src={logo} alt='Sabitech Logo' style={{ height: '36px', objectFit: 'contain' }} />
+                        <img src={qr} alt='QR de prueba' style={{ height: '300px' }} />
                     </div>
                     <p style={{ color: '#94a3b8', fontSize: '0.8rem', margin: '12px 0 0 0' }}>
-                        Código QR de muestra
+                        Escanea el QR al momento de acceder a la charla.
                     </p>
 
                     <button

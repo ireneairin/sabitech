@@ -1,7 +1,7 @@
 import logo from '../assets/logoSabitechFINAL.png';
 
-export default function Navbar({ currentView, onNavigate, usuario, onLogout }) {
-    
+export default function Navbar({ currentView, onNavigate, usuario, onLogout, cerrandoSesion }) {
+
     // Función inteligente para manejar el click de "Sobre nosotros"
     const handleSobreNosotrosClick = () => {
         if (currentView !== 'home') {
@@ -32,8 +32,8 @@ export default function Navbar({ currentView, onNavigate, usuario, onLogout }) {
                 justifyContent: 'space-between'
             }}>
                 {/* Logo (izquierda) */}
-                <button 
-                    onClick={() => onNavigate('home')} 
+                <button
+                    onClick={() => onNavigate('home')}
                     style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}
                 >
                     <img src={logo} alt='Sabitech Logo' style={{ height: '36px', objectFit: 'contain' }} />
@@ -98,20 +98,19 @@ export default function Navbar({ currentView, onNavigate, usuario, onLogout }) {
                             <span style={{ fontSize: '0.95rem', color: '#1e293b', fontWeight: '600' }}>
                                 Hola, {usuario.nombre}
                             </span>
-                            <button 
-                                onClick={onLogout} 
-                                style={{
-                                    backgroundColor: '#f1f5f9', color: '#475569', border: '1px solid #cbd5e1',
-                                    padding: '8px 14px', borderRadius: '8px', fontSize: '0.9rem', fontWeight: '600', cursor: 'pointer'
-                                }}
+                            <button
+                                onClick={onLogout}
+                                disabled={cerrandoSesion}
+                                className='btn btn--outline-light'
+                                style={{ cursor: cerrandoSesion ? 'not-allowed' : 'pointer', opacity: cerrandoSesion ? 0.7 : 1 }}
                             >
-                                Cerrar sesión
+                                {cerrandoSesion ? 'Cerrando sesión...' : 'Cerrar sesión'}
                             </button>
                         </div>
                     ) : (
                         <div style={{ display: 'flex', gap: '10px' }}>
-                            <button 
-                                onClick={() => onNavigate('login')} 
+                            <button
+                                onClick={() => onNavigate('login')}
                                 style={{
                                     backgroundColor: 'transparent', color: '#2563eb', border: '1px solid #2563eb',
                                     padding: '8px 16px', borderRadius: '8px', fontWeight: '600', cursor: 'pointer'
@@ -119,8 +118,8 @@ export default function Navbar({ currentView, onNavigate, usuario, onLogout }) {
                             >
                                 Acceder
                             </button>
-                            <button 
-                                onClick={() => onNavigate('registro')} 
+                            <button
+                                onClick={() => onNavigate('registro')}
                                 style={{
                                     backgroundColor: '#2563eb', color: '#ffffff', border: 'none',
                                     padding: '8px 16px', borderRadius: '8px', fontWeight: '600', cursor: 'pointer'
