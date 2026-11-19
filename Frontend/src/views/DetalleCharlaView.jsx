@@ -1,1 +1,0 @@
-//información de cada charla

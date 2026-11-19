@@ -11,7 +11,7 @@ class CharlaController extends Controller
     // GET /api/charlas
     public function list(): JsonResponse
     {
-        $charlas = Charla::all();
+        $charlas = Charla::with('sala')->get();
 
         return response()->json(['data' => $charlas], 200);
     }

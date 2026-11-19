@@ -17,7 +17,7 @@ export default function HeroBanner({ usuario, onNavigate }) {
                 Plataforma Oficial Sabitech 2026
             </span>
             <h1 style={{ fontSize: '2.25rem', margin: 0, fontWeight: '800' }}>
-                {usuario ? `¡Hola de nuevo, ${usuario.nombre}! 👋` : 'Bienvenido a Sabitech'}
+                {usuario ? `¡Hola de nuevo, ${usuario.nombre}!` : 'Bienvenido a Sabitech'}
             </h1>
             <p style={{ fontSize: '1.05rem', color: '#94a3b8', maxWidth: '600px', margin: 0, lineHeight: '1.6' }}>
                 {usuario 

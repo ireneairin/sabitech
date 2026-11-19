@@ -58,21 +58,21 @@ export default function HomeView({ usuario, onNavigate }) {
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', margin: '30px 0' }}>
                     <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                        <h3 style={{ color: '#2563eb', margin: '0 0 8px 0', fontSize: '1.1rem' }}>📍 XTART Valencia</h3>
+                        <h3 style={{ color: '#2563eb', margin: '0 0 8px 0', fontSize: '1.1rem' }}><strong>Ubicación:</strong> XTART Valencia</h3>
                         <p style={{ color: '#64748b', fontSize: '0.95rem', margin: 0, lineHeight: '1.5' }}>
                             Celebrado presencialmente en las modernas instalaciones del centro XTART en Valencia.
                         </p>
                     </div>
 
                     <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                        <h3 style={{ color: '#2563eb', margin: '0 0 8px 0', fontSize: '1.1rem' }}>⏳ 3 Días de Duración</h3>
+                        <h3 style={{ color: '#2563eb', margin: '0 0 8px 0', fontSize: '1.1rem' }}><strong>Duración:</strong> 4 días | 13-16 Junio</h3>
                         <p style={{ color: '#64748b', fontSize: '0.95rem', margin: 0, lineHeight: '1.5' }}>
                             Tres jornadas intensivas repletas de ponencias magistrales, debates y talleres prácticos.
                         </p>
                     </div>
 
                     <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                        <h3 style={{ color: '#2563eb', margin: '0 0 8px 0', fontSize: '1.1rem' }}>🚪 Múltiples Aulas</h3>
+                        <h3 style={{ color: '#2563eb', margin: '0 0 8px 0', fontSize: '1.1rem' }}>Múltiples aulas</h3>
                         <p style={{ color: '#64748b', fontSize: '0.95rem', margin: 0, lineHeight: '1.5' }}>
                             Charlas simultáneas distribuidas en las distintas aulas del centro adaptadas a cada temática.
                         </p>

@@ -62,11 +62,11 @@ export default function ReservaView({ onNavigate, charla, usuario }) {
                             <strong>Descripción:</strong> {charla.descripcion}
                         </p>
                         <p style={{ margin: '0 0 24px 0', fontSize: '0.95rem', color: '#475569' }}>
-                            📅 <strong>Fecha:</strong> {charla.fecha} · 🕒 <strong>Hora:</strong> {recortarHora(charla.hora_inicio)} - {recortarHora(charla.hora_fin)}
-                            {charla.sala ? <> · 📍 <strong>Sala:</strong> {charla.sala.nombre} </> : null}
+                            <strong>Fecha:</strong> {charla.fecha} · <strong>Hora:</strong> {recortarHora(charla.hora_inicio)} - {recortarHora(charla.hora_fin)}
+                            {charla.sala ? <> · <strong>Sala:</strong> {charla.sala.nombre} </> : null} 
                         </p>
 
-                        {/* 1. Si NO ha iniciado sesión */}
+                        {/* Si NO ha iniciado sesión */}
                         {!usuario ? (
                             <div style={{ background: '#fff8e1', padding: '20px', borderRadius: '8px', borderLeft: '4px solid #f59e0b' }}>
                                 <h3 style={{ margin: '0 0 8px 0', color: '#92400e' }}>Inicia sesión para reservar</h3>
@@ -80,9 +80,9 @@ export default function ReservaView({ onNavigate, charla, usuario }) {
                                 </button>
                             </div>
                         ) : reservada ? (
-                            /* 2. Cuando YA se ha guardado la reserva en la BD */
+                            /* Cuando YA se ha guardado la reserva en la BD */
                             <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '8px', borderLeft: '4px solid #1a73e8' }}>
-                                <h3 style={{ margin: '0 0 8px 0', color: '#1e293b' }}>✅ Reserva confirmada</h3>
+                                <h3 style={{ margin: '0 0 8px 0', color: '#1e293b' }}>Reserva confirmada correctamente</h3>
                                 <p style={{ margin: '0 0 8px 0', color: '#475569' }}>
                                     Tu plaza ha quedado registrada con éxito en la base de datos, <strong>{usuario.nombre}</strong>.
                                 </p>
@@ -93,7 +93,7 @@ export default function ReservaView({ onNavigate, charla, usuario }) {
                                 )}
                             </div>
                         ) : (
-                            /* 3. Usuario logueado listo para confirmar */
+                            /* Usuario logueado listo para confirmar */
                             <div>
                                 {error && (
                                     <p style={{ color: '#d32f2f', backgroundColor: '#fdecea', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
