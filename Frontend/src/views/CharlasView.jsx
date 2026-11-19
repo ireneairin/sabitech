@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { list } from '../api/charlaApi.js';
+import Modal from '../components/Modal.jsx';
+import logo from '../assets/logoSabitechFINAL.png';
 import { API_BASE_URL } from '../api/config.js';
 
 function recortarHora(hora) {
@@ -44,6 +46,7 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
     const [misReservas, setMisReservas] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
+    const [modal, setModal] = useState(null);
 
     // Estados botón cancelar reserva
     const [cancelandoId, setCancelandoId] = useState(null);
@@ -90,10 +93,23 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
 
     const estaReservada = (idCharla) => Boolean(reservaDeCharla(idCharla));
 
-    const cancelarReserva = async (idCharla) => {
+    const abrirModal = (tipo, charla) => {
+        setErrorCancelar('');
+        setModal({ tipo, charla });
+    };
+
+    // No dejamos cerrar mientras se está cancelando
+    const cerrarModal = () => {
+        if (cancelandoId !== null) return;
+        setModal(null);
+        setErrorCancelar('');
+    };
+
+    // Se ejecuta al pulsar "Sí, cancelar" dentro del popup
+    const confirmarCancelacion = async () => {
+        const idCharla = modal.charla.id;
         const reserva = reservaDeCharla(idCharla);
-        if (!reserva) return;
-        if (!window.confirm('¿Seguro que quieres cancelar tu reserva?')) return;
+        if (!reserva) { setModal(null); return; }
 
         setErrorCancelar('');
         setCancelandoId(idCharla);
@@ -112,8 +128,9 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
             const json = await response.json();
 
             if (response.ok) {
-                // Solo si el servidor confirma la quitamos de la pantalla
+                // Solo si el servidor confirma, la quitamos y cerramos el popup
                 setMisReservas((prev) => prev.filter((r) => r.id !== reserva.id));
+                setModal(null);
             } else {
                 setErrorCancelar(json.mensaje || 'No se pudo cancelar la reserva.');
             }
@@ -122,7 +139,7 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
         } finally {
             setCancelandoId(null);
         }
-    }
+    };
 
     if (cargando) return (
         <div style={{
@@ -136,20 +153,6 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
             fontWeight: '500'
         }}>
             Cargando ponencias...
-        </div>
-    );
-
-    if (error) return (
-        <div style={{
-            flex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '80px 20px',
-            color: '#dc2626',
-            fontWeight: '500'
-        }}>
-            Error: {error}
         </div>
     );
 
@@ -253,21 +256,25 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
                                     <div>
                                         {reservada ? (
                                             <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                                                <span style={{
-                                                    flex: 1,
-                                                    textAlign: 'center',
-                                                    padding: '10px',
-                                                    backgroundColor: '#f0fdf4',
-                                                    color: '#166534',
-                                                    borderRadius: '8px',
-                                                    fontWeight: '600',
-                                                    fontSize: '0.9rem',
-                                                    border: '1px solid #bbf7d0'
-                                                }}>
-                                                    Plaza asegurada
-                                                </span>
                                                 <button
-                                                    onClick={() => cancelarReserva(charla.id)}
+                                                    onClick={() => abrirModal('qr', charla)}
+                                                    style={{
+                                                        flex: 1,
+                                                        textAlign: 'center',
+                                                        padding: '10px',
+                                                        backgroundColor: '#f0fdf4',
+                                                        color: '#166534',
+                                                        borderRadius: '8px',
+                                                        fontWeight: '600',
+                                                        fontSize: '0.9rem',
+                                                        border: '1px solid #bbf7d0',
+                                                        cursor: 'pointer',
+                                                    }}
+                                                >
+                                                    Ver QR
+                                                </button>
+                                                <button
+                                                    onClick={() => abrirModal('cancelar', charla)}
                                                     disabled={estaCancelando}
                                                     style={{
                                                         padding: '10px 16px',
@@ -314,6 +321,64 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
                     })}
                 </div>
             )}
+
+            {modal?.tipo === 'qr' && (
+                <Modal titulo="Tu entrada" onClose={cerrarModal}>
+                    <p style={{ margin: '0 0 4px 0', color: '#0f172a', fontWeight: 600 }}>{modal.charla.nombre}</p>
+                    <p style={{ margin: '0 0 20px 0', color: '#64748b', fontSize: '0.9rem' }}>
+                        {formatearFecha(modal.charla.fecha)} · {recortarHora(modal.charla.hora_inicio)} - {recortarHora(modal.charla.hora_fin)}
+                    </p>
+
+                    <div style={{ display: 'inline-block', padding: '16px', border: '1px solid #e2e8f0', borderRadius: '12px', backgroundColor: '#fff' }}>
+                        <img src={logo} alt='Sabitech Logo' style={{ height: '36px', objectFit: 'contain' }} />
+                    </div>
+                    <p style={{ color: '#94a3b8', fontSize: '0.8rem', margin: '12px 0 0 0' }}>
+                        Código QR de muestra
+                    </p>
+
+                    <button
+                        onClick={cerrarModal}
+                        style={{ marginTop: '20px', width: '100%', padding: '10px 16px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }}
+                    >
+                        Cerrar
+                    </button>
+                </Modal>
+            )}
+
+            {modal?.tipo === 'cancelar' && (
+                <Modal titulo="Cancelar reserva" onClose={cerrarModal}>
+                    <p style={{ color: '#334155', margin: '0 0 8px 0' }}>
+                        ¿Seguro que quieres cancelar tu reserva de <strong>{modal.charla.nombre}</strong>?
+                    </p>
+                    <p style={{ color: '#64748b', fontSize: '0.9rem', margin: 0 }}>
+                        Se liberará tu plaza. Podrás volver a reservar más adelante.
+                    </p>
+
+                    {errorCancelar && (
+                        <div style={{ color: '#dc2626', backgroundColor: '#fef2f2', border: '1px solid #fecaca', padding: '10px 14px', borderRadius: '8px', marginTop: '16px', fontWeight: 500, fontSize: '0.9rem' }}>
+                            {errorCancelar}
+                        </div>
+                    )}
+
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                        <button
+                            onClick={cerrarModal}
+                            disabled={cancelandoId !== null}
+                            style={{ flex: 1, padding: '10px 16px', background: '#fff', color: '#334155', border: '1px solid #cbd5e1', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }}
+                        >
+                            Volver
+                        </button>
+                        <button
+                            onClick={confirmarCancelacion}
+                            disabled={cancelandoId !== null}
+                            style={{ flex: 1, padding: '10px 16px', background: '#dc2626', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: cancelandoId !== null ? 'not-allowed' : 'pointer' }}
+                        >
+                            {cancelandoId !== null ? 'Cancelando...' : 'Sí, cancelar'}
+                        </button>
+                    </div>
+                </Modal>
+            )}
+
         </section>
     );
 }
