@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
-import Main from './views/HomeView.jsx';
+import Main from './views/MainView.jsx';
 import Charlas from './views/CharlasView.jsx';
 import Login from './views/LoginView.jsx';
 import Reserva from './views/ReservaView.jsx';
@@ -83,7 +83,7 @@ export default function App() {
 					/>
 				);
 			case 'sobre-nosotros':
-				return <Home onNavigate={setCurrentView} usuario={usuario} />;
+				return <Main onNavigate={setCurrentView} usuario={usuario} />;
 			case 'login':
 				return <Login onLoginSuccess={handleLoginSuccess} onNavigate={setCurrentView} />;
 			case 'registro':

@@ -1,9 +1,19 @@
+import { useState } from 'react';
 import logo from '../assets/logoSabitechFINAL.png';
 
 export default function Navbar({ currentView, onNavigate, usuario, onLogout, cerrandoSesion }) {
+    // Solo se usa en pantallas estrechas (menú hamburguesa)
+    const [menuAbierto, setMenuAbierto] = useState(false);
+
+    // Navegar y cerrar el menú desplegable
+    const ir = (vista) => {
+        setMenuAbierto(false);
+        onNavigate(vista);
+    };
 
     // Función inteligente para manejar el click de "Sobre nosotros"
     const handleSobreNosotrosClick = () => {
+        setMenuAbierto(false);
         if (currentView !== 'home') {
             onNavigate('home');
             setTimeout(() => {
@@ -14,121 +24,78 @@ export default function Navbar({ currentView, onNavigate, usuario, onLogout, cer
         }
     };
 
+    const claseLink = (vista) => `sbt-nav-link${currentView === vista ? ' is-active' : ''}`;
+
     return (
-        <header style={{
-            backgroundColor: '#ffffff',
-            borderBottom: '1px solid #e2e8f0',
-            position: 'sticky',
-            top: 0,
-            zIndex: 100,
-            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.02)'
-        }}>
-            <div style={{
-                maxWidth: '1200px',
-                margin: '0 auto',
-                padding: '12px 24px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-            }}>
+        <header className='sbt-header'>
+            <div className='sbt-header__inner'>
                 {/* Logo (izquierda) */}
-                <button
-                    onClick={() => onNavigate('home')}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}
-                >
-                    <img src={logo} alt='Sabitech Logo' style={{ height: '36px', objectFit: 'contain' }} />
+                <button onClick={() => ir('home')} className='sbt-logo-btn' aria-label='Ir al inicio'>
+                    <img src={logo} alt='Sabitech Logo' className='sbt-logo' />
                 </button>
 
-                {/* Enlaces de navegación (centro) */}
-                <nav style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <button
-                        onClick={() => onNavigate('home')}
-                        style={{
-                            backgroundColor: currentView === 'home' ? '#eff6ff' : 'transparent',
-                            color: currentView === 'home' ? '#2563eb' : '#475569',
-                            border: 'none', padding: '8px 16px', borderRadius: '8px',
-                            fontWeight: currentView === 'home' ? '600' : '500', cursor: 'pointer', fontSize: '0.95rem'
-                        }}
-                    >
-                        Inicio
-                    </button>
-                    <button
-                        onClick={() => onNavigate('charlas')}
-                        style={{
-                            backgroundColor: currentView === 'charlas' ? '#eff6ff' : 'transparent',
-                            color: currentView === 'charlas' ? '#2563eb' : '#475569',
-                            border: 'none', padding: '8px 16px', borderRadius: '8px',
-                            fontWeight: currentView === 'charlas' ? '600' : '500', cursor: 'pointer', fontSize: '0.95rem'
-                        }}
-                    >
-                        Charlas
-                    </button>
+                {/* Botón hamburguesa (solo visible en pantallas estrechas) */}
+                <button
+                    className='sbt-menu-toggle'
+                    onClick={() => setMenuAbierto((abierto) => !abierto)}
+                    aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
+                    aria-expanded={menuAbierto}
+                    aria-controls='sbt-panel'
+                >
+                    <span className='sbt-menu-toggle__bar' />
+                    <span className='sbt-menu-toggle__bar' />
+                    <span className='sbt-menu-toggle__bar' />
+                </button>
 
-                    {usuario && (
-                        <button
-                            onClick={() => onNavigate('mis-charlas')}
-                            style={{
-                                backgroundColor: currentView === 'mis-charlas' ? '#eff6ff' : 'transparent',
-                                color: currentView === 'mis-charlas' ? '#2563eb' : '#475569',
-                                border: 'none', padding: '8px 16px', borderRadius: '8px',
-                                fontWeight: currentView === 'mis-charlas' ? '600' : '500', cursor: 'pointer', fontSize: '0.95rem'
-                            }}
-                        >
-                            Mis charlas
+                {/* Panel: en escritorio es la barra normal, en móvil es el menú desplegable */}
+                <div id='sbt-panel' className={`sbt-panel${menuAbierto ? ' is-open' : ''}`}>
+                    {/* Enlaces de navegación (centro) */}
+                    <nav className='sbt-nav'>
+                        <button onClick={() => ir('home')} className={claseLink('home')}>
+                            Inicio
                         </button>
-                    )}
+                        <button onClick={() => ir('charlas')} className={claseLink('charlas')}>
+                            Charlas
+                        </button>
 
-                    <button
-                        onClick={handleSobreNosotrosClick}
-                        style={{
-                            backgroundColor: 'transparent',
-                            color: '#475569',
-                            border: 'none', padding: '8px 16px', borderRadius: '8px',
-                            fontWeight: '500', cursor: 'pointer', fontSize: '0.95rem'
-                        }}
-                    >
-                        Sobre nosotros
-                    </button>
-                </nav>
+                        {usuario && (
+                            <button onClick={() => ir('mis-charlas')} className={claseLink('mis-charlas')}>
+                                Mis charlas
+                            </button>
+                        )}
 
-                {/* Zona de usuario / Acciones (derecha) */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    {usuario ? (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                            <span style={{ fontSize: '0.95rem', color: '#1e293b', fontWeight: '600' }}>
-                                Hola, {usuario.nombre}
-                            </span>
-                            <button
-                                onClick={onLogout}
-                                disabled={cerrandoSesion}
-                                className='btn btn--outline-light'
-                                style={{ cursor: cerrandoSesion ? 'not-allowed' : 'pointer', opacity: cerrandoSesion ? 0.7 : 1 }}
-                            >
-                                {cerrandoSesion ? 'Cerrando sesión...' : 'Cerrar sesión'}
-                            </button>
-                        </div>
-                    ) : (
-                        <div style={{ display: 'flex', gap: '10px' }}>
-                            <button
-                                onClick={() => onNavigate('login')}
-                                style={{
-                                    backgroundColor: 'transparent', color: '#2563eb', border: '1px solid #2563eb',
-                                    padding: '8px 16px', borderRadius: '8px', fontWeight: '600', cursor: 'pointer'
-                                }}
-                            >
-                                Acceder
-                            </button>
-                            <button
-                                onClick={() => onNavigate('registro')}
-                                style={{
-                                    backgroundColor: '#2563eb', color: '#ffffff', border: 'none',
-                                    padding: '8px 16px', borderRadius: '8px', fontWeight: '600', cursor: 'pointer'
-                                }}
-                            >
-                                Crear cuenta
-                            </button>
-                        </div>
-                    )}
+                        <button onClick={handleSobreNosotrosClick} className='sbt-nav-link'>
+                            Sobre nosotros
+                        </button>
+                    </nav>
+
+                    {/* Zona de usuario / Acciones (derecha) */}
+                    <div className='sbt-actions'>
+                        {usuario ? (
+                            <div className='sbt-user'>
+                                <span className='sbt-user__name'>
+                                    Hola, {usuario.nombre}
+                                </span>
+                                <button
+                                    onClick={() => { setMenuAbierto(false); onLogout(); }}
+                                    disabled={cerrandoSesion}
+                                    className='btn btn--outline-light'
+                                    style={{ cursor: cerrandoSesion ? 'not-allowed' : 'pointer', opacity: cerrandoSesion ? 0.7 : 1 }}
+                                >
+                                    {cerrandoSesion ? 'Cerrando sesión...' : 'Cerrar sesión'}
+                                </button>
+                            </div>
+                        ) : (
+                            <div className='sbt-auth'>
+                                <button onClick={() => ir('login')} className='sbt-btn-outline'>
+                                    Acceder
+                                </button>
+                                <button onClick={() => ir('registro')} className='sbt-btn-solid'>
+                                    Crear cuenta
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </header>

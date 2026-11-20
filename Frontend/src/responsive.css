@@ -1,0 +1,478 @@
+/* =========================================================
+    Estilos base (escritorio) + adaptación a tablet y móvil.
+    Lo de escritorio replica lo que antes estaba en línea;
+    los cambios para pantallas pequeñas están en los @media.
+    Breakpoints: 1000px (menú hamburguesa), 768px y 480px.
+   ========================================================= */
+
+/* ---------- Navbar ---------- */
+.sbt-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.sbt-header__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sbt-logo-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.sbt-logo {
+    height: 36px;
+    object-fit: contain;
+}
+
+/* En escritorio el panel no existe como caja: nav y acciones
+   se colocan directamente en la barra, como antes. */
+.sbt-panel {
+    display: contents;
+}
+
+.sbt-menu-toggle {
+    display: none;
+}
+
+.sbt-nav {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.sbt-nav-link {
+    background-color: transparent;
+    color: #475569;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.sbt-nav-link.is-active {
+    background-color: #eff6ff;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.sbt-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sbt-user {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.sbt-user__name {
+    font-size: 0.95rem;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.sbt-auth {
+    display: flex;
+    gap: 10px;
+}
+
+.sbt-btn-outline {
+    background-color: transparent;
+    color: #2563eb;
+    border: 1px solid #2563eb;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.sbt-btn-solid {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.hero__title {
+    font-size: 2.25rem;
+    margin: 0;
+    font-weight: 800;
+}
+
+.hero__actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+/* ---------- Home ---------- */
+.home-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: left;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: #0f172a;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+
+.about-box {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 40px;
+    margin-top: 40px;
+}
+
+.about-box__title {
+    font-size: 2rem;
+    color: #0f172a;
+    margin: 8px 0 20px 0;
+}
+
+/* ---------- Charlas ---------- */
+.charlas-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: left;
+}
+
+.charlas-title {
+    font-size: 2rem;
+    color: #0f172a;
+    margin: 0 0 8px 0;
+}
+
+.charla-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.empty-state {
+    padding: 50px;
+    text-align: center;
+    border: 2px dashed #e2e8f0;
+    border-radius: 16px;
+    background-color: #f8fafc;
+    margin-top: 20px;
+}
+
+/* ---------- Reserva ---------- */
+.reserva-page {
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.reserva-card {
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.reserva-title {
+    margin: 0 0 12px 0;
+    font-size: 1.75rem;
+    color: #0f172a;
+}
+
+/* ---------- Login ---------- */
+.login-card {
+    box-sizing: border-box;
+    width: calc(100% - 32px);
+    max-width: 462px;
+    margin: 60px auto;
+    padding: 30px;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* ---------- Modal ---------- */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background-color: rgba(15, 23, 42, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.modal-dialog {
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    width: 100%;
+    max-width: 476px;
+    max-height: 100%;
+    overflow-y: auto;
+    text-align: center;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.25);
+}
+
+.qr-img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+}
+
+/* =========================================================
+    ≤ 1000px  ·  Menú hamburguesa (la barra ya no cabe en una línea)
+   ========================================================= */
+@media (max-width: 1000px) {
+    .sbt-header__inner {
+        padding: 10px 16px;
+    }
+
+    .sbt-menu-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        width: 44px;
+        height: 44px;
+        background: none;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .sbt-menu-toggle__bar {
+        display: block;
+        width: 20px;
+        height: 2px;
+        background-color: #0f172a;
+        border-radius: 2px;
+    }
+
+    .sbt-panel {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 12px;
+        padding: 8px 16px 16px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        max-height: calc(100vh - 64px);
+        max-height: calc(100dvh - 64px);
+        overflow-y: auto;
+    }
+
+    .sbt-panel.is-open {
+        display: flex;
+    }
+
+    .sbt-nav {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+    }
+
+    .sbt-nav-link {
+        text-align: left;
+        min-height: 44px;
+        font-size: 1rem;
+    }
+
+    .sbt-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 12px;
+    }
+
+    .sbt-user {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .sbt-user .btn {
+        min-height: 44px;
+    }
+
+    .sbt-auth>button {
+        flex: 1;
+        min-height: 44px;
+    }
+}
+
+/* =========================================================
+    ≤ 768px  ·  Tablet vertical y móvil
+   ========================================================= */
+@media (max-width: 768px) {
+    .home-page {
+        padding: 24px 16px;
+    }
+
+    .hero {
+        padding: 28px 20px;
+        margin-bottom: 28px;
+    }
+
+    .hero__title {
+        font-size: 1.75rem;
+    }
+
+    .hero__actions {
+        flex-direction: column;
+    }
+
+    .hero__actions>button {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+    }
+
+    .about-box {
+        padding: 24px 20px;
+        margin-top: 28px;
+    }
+
+    .about-box__title {
+        font-size: 1.5rem;
+    }
+
+    .charlas-page {
+        padding: 24px 16px;
+    }
+
+    .charlas-title {
+        font-size: 1.6rem;
+    }
+
+    .charla-card {
+        padding: 18px;
+    }
+
+    .charla-card button {
+        min-height: 44px;
+    }
+
+    .empty-state {
+        padding: 30px 20px;
+    }
+
+    .reserva-page {
+        padding: 20px 16px;
+    }
+
+    .reserva-card {
+        padding: 20px;
+    }
+
+    .reserva-title {
+        font-size: 1.4rem;
+    }
+
+    .reserva-page button {
+        min-height: 44px;
+    }
+
+    .reserva-card button {
+        width: 100%;
+    }
+
+    .login-card {
+        margin: 24px auto;
+        padding: 20px;
+    }
+
+    /* 16px evita que iOS haga zoom al enfocar un campo */
+    .login-card input {
+        font-size: 16px;
+        min-height: 44px;
+    }
+
+    .login-card button {
+        min-height: 44px;
+    }
+
+    .modal-overlay {
+        padding: 12px;
+    }
+
+    .modal-dialog {
+        padding: 20px;
+    }
+
+    .modal-dialog button {
+        min-height: 44px;
+    }
+}
+
+/* =========================================================
+    ≤ 480px  ·  Móvil pequeño
+   ========================================================= */
+@media (max-width: 480px) {
+    .hero__title {
+        font-size: 1.5rem;
+    }
+
+    .charlas-title {
+        font-size: 1.4rem;
+    }
+}

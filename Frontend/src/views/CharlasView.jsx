@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { list } from '../api/charlaApi.js';
 import Modal from '../components/Modal.jsx';
-import logo from '../assets/logoSabitechFINAL.png';
 import qr from '../assets/QR_pruebas.png';
 import { API_BASE_URL } from '../api/config.js';
 
@@ -163,9 +162,9 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
         : charlas;
 
     return (
-        <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px', textAlign: 'left' }}>
+        <section className='charlas-page'>
             <div style={{ marginBottom: '30px' }}>
-                <h1 style={{ fontSize: '2rem', color: '#0f172a', margin: '0 0 8px 0' }}>
+                <h1 className='charlas-title'>
                     {soloMisCharlas ? 'Mis charlas reservadas' : 'Catálogo de Charlas'}
                 </h1>
                 <p style={{ color: '#64748b', fontSize: '1rem', margin: 0 }}>
@@ -182,7 +181,7 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
             )}
 
             {charlasAMostrar.length === 0 ? (
-                <div style={{ padding: '50px', textAlign: 'center', border: '2px dashed #e2e8f0', borderRadius: '16px', backgroundColor: '#f8fafc', marginTop: '20px' }}>
+                <div className='empty-state'>
                     <p style={{ margin: '0 0 16px 0', color: '#475569', fontSize: '1.1rem' }}>
                         {soloMisCharlas
                             ? 'Todavía no has reservado ninguna charla en tu cuenta.'
@@ -198,24 +197,14 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
                     )}
                 </div>
             ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '24px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))', gap: '24px' }}>
                     {charlasAMostrar.map((charla) => {
                         const reservada = estaReservada(charla.id);
                         const estaCancelando = cancelandoId === charla.id;
                         const estilosCategoria = cambioEstiloCategoria(charla.categoria);
 
                         return (
-                            <div key={charla.id} style={{
-                                backgroundColor: '#ffffff',
-                                border: '1px solid #e2e8f0',
-                                borderRadius: '14px',
-                                padding: '24px',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'space-between',
-                                boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)',
-                                transition: 'transform 0.2s, box-shadow 0.2s'
-                            }}
+                            <div key={charla.id} className='charla-card'
                                 onMouseOver={(e) => {
                                     e.currentTarget.style.transform = 'translateY(-4px)';
                                     e.currentTarget.style.boxShadow = '0 12px 20px -5px rgba(0,0,0,0.06)';
@@ -226,7 +215,7 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
                                 }}
                             >
                                 <div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '8px', marginBottom: '12px' }}>
                                         <span style={{
                                             fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px', backgroundColor: estilosCategoria.backgroundColor, color: estilosCategoria.color, padding: '4px 10px', borderRadius: '6px', fontWeight: '700'
                                         }}>
@@ -256,7 +245,7 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
 
                                     <div>
                                         {reservada ? (
-                                            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
                                                 <button
                                                     onClick={() => abrirModal('qr', charla)}
                                                     style={{
@@ -330,8 +319,8 @@ export default function CharlasView({ onNavigate, onSelectCharla, usuario, soloM
                         {formatearFecha(modal.charla.fecha)} · {recortarHora(modal.charla.hora_inicio)} - {recortarHora(modal.charla.hora_fin)}
                     </p>
 
-                    <div style={{ display: 'inline-block', padding: '16px', border: '1px solid #e2e8f0', borderRadius: '12px', backgroundColor: '#fff' }}>
-                        <img src={qr} alt='QR de prueba' style={{ height: '300px' }} />
+                    <div style={{ maxWidth: '334px', margin: '0 auto', boxSizing: 'border-box', padding: '16px', border: '1px solid #e2e8f0', borderRadius: '12px', backgroundColor: '#fff' }}>
+                        <img src={qr} alt='QR de prueba' className='qr-img' />
                     </div>
                     <p style={{ color: '#94a3b8', fontSize: '0.8rem', margin: '12px 0 0 0' }}>
                         Escanea el QR al momento de acceder a la charla.

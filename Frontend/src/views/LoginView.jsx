@@ -40,7 +40,7 @@ export default function Login({ onLoginSuccess }) {
 	};
 
 	return (
-		<div style={{ maxWidth: '400px', margin: '60px auto', padding: '30px', border: '1px solid #eaeaea', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+		<div className='login-card'>
 			<h2>Iniciar Sesión</h2>
 
 			{error && (

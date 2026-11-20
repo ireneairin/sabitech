@@ -48,15 +48,8 @@ Route::post('/consultas', [ConsultaController::class, 'crearConsulta']);
 Route::put('/consultas/{id}', [ConsultaController::class, 'modificarConsulta'])->whereNumber('id');
 Route::delete('/consultas/{id}', [ConsultaController::class, 'eliminarConsulta'])->whereNumber('id');
 
-// ---------------- RESERVAS ----------------
-/*Route::get('/reservas', [ReservaController::class, 'list']);
-Route::get('/reservas/{id}', [ReservaController::class, 'idReserva'])->whereNumber('id');
-Route::post('/reservas', [ReservaController::class, 'crearReserva']);
-Route::put('/reservas/{id}', [ReservaController::class, 'modificarReserva'])->whereNumber('id');
-Route::delete('/reservas/{id}', [ReservaController::class, 'eliminarReserva'])->whereNumber('id');*/
-
 // ---------------- TABLAS INTERMEDIAS (charla <-> usuario) ----------------
-// Los parámetros se pasan al método por ORDEN: {idCharla} primero, {idUsuario} después.
+// Los parámetros se pasan al método por ORDEN: {idCharla} primero, {idUsuario} después
 
 // asiste: usuarios que asisten a la charla
 Route::get('/charlas/{idCharla}/asistentes', [AsisteController::class, 'list'])
