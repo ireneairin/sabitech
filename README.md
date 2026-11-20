@@ -4,7 +4,7 @@ Aplicación web _responsive_ desarrollada para la gestión integral de conferenc
 
 - **Repositorio oficial:** `https://github.com/ireneairin/sabitech.git`
 - **Empresa desarrolladora (simulada):** WebTech, S.L.
-- **Equipo de desarrollo (2.º DAW - Curso 2026/2027):** Irene Arastey Casañ, Alma Colomar Giménez e Ignacio Piedrabuena Martínez.
+- **Equipo de desarrollo (2.º DAW - Curso 2026/2027):** Irene Arastey Casañ, Alma Colomar Gimenez e Ignacio Piedrabuena Martínez.
 - **Hito de referencia:** Primer Checkpoint (Noviembre 2026) — Arquitectura base, catálogo conectado a BBDD, autenticación, reservas persistentes, cancelación y despliegue contenedorizado.
 
 ---
