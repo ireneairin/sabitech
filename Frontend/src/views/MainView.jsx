@@ -11,7 +11,7 @@ export default function HomeView({ usuario, onNavigate }) {
 
             {/* Sección de características o accesos rápidos */}
             <h2 className='section-title'>
-                ¿Qué te ofrece Sabitech?
+                ¿Qué te ofrece Sabitech? 
             </h2>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '20px', marginBottom: '60px' }}>
