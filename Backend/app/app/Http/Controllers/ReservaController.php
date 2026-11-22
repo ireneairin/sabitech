@@ -42,14 +42,6 @@ class ReservaController extends Controller
         $idUsuario = $request->user()->id;
 
         // Evitar que el usuario reserve dos veces la misma charla si ya la tiene activa
-        /*$yaReservada = Reserva::where('id_usuario', $idUsuario)
-            ->where('id_charla', $datos['id_charla'])
-            ->where('estado', 'activa')
-            ->exists();
-
-        if ($yaReservada) {
-            return response()->json(['mensaje' => 'Ya tienes una reserva activa para esta charla'], 409);
-        }*/
         $existente = Reserva::where('id_usuario', $idUsuario)
             ->where('id_charla', $datos['id_charla'])
             ->first();
@@ -58,6 +50,7 @@ class ReservaController extends Controller
             return response()->json(['mensaje' => 'Ya tienes una reserva activa para esta charla.'], 409);
         }
 
+        // El QR lo genera el servidor (el cliente podría falsificarlo)
         if ($existente) {
             // Estaba cancelada; la reactivamos (la base de datos no permite dos filas usuario+charla)
             $existente->update([
@@ -74,15 +67,6 @@ class ReservaController extends Controller
                 'qr' => (string) Str::uuid(),
             ]);
         }
-
-        // El QR lo genera el servidor (el cliente podría falsificarlo)
-        // Str::uuid() crea un identificador único; la columna qr es unique
-        // $reserva = Reserva::create([
-        //     'id_usuario' => $idUsuario,
-        //     'id_charla' => $datos['id_charla'],
-        //     'fecha_reserva' => now(),
-        //     'qr' => (string) Str::uuid(),
-        // ]);
 
         // refresh() para que aparezca estado = 'activa' (lo pone MySQL)
         return response()->json([

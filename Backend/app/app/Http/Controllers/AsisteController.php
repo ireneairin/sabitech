@@ -16,10 +16,10 @@ class AsisteController extends Controller
 
         if (!$charla) {
             // Sin paréntesis (->asistentes): Laravel ejecuta la consulta y da los usuarios
-            return response()->json(['data' => $charla->asistentes], 200);
+            return response()->json(['mensaje' => 'Charla no encontrada'], 404);
         }
 
-        return response()->json(['mensaje' => 'Charla no encontrada'], 404);
+        return response()->json(['data' => $charla->asistentes], 200);
     }
 
     // POST /api/charlas/5/asistentes   body: { "id_usuario": 3 }

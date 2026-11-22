@@ -14,11 +14,11 @@ class ImparteController extends Controller
     {
         $charla = Charla::find($idCharla);
 
-        if ($charla) {
-            return response()->json(['data' => $charla->ponentes], 200);
+        if (!$charla) {
+            return response()->json(['mensaje' => 'Charla no encontrada'], 404);
         }
 
-        return response()->json(['mensaje' => 'Charla no encontrada'], 404);
+        return response()->json(['data' => $charla->ponentes], 200);
     }
 
     // POST /api/charlas/5/ponentes   body: { "id_usuario": 3 }

@@ -14,7 +14,7 @@ class GestionaController extends Controller
     {
         $charla = Charla::find($idCharla);
 
-        if ($charla) {
+        if (!$charla) {
             return response()->json(['mensaje' => 'Charla no encontrada'], 404);
         }
 
