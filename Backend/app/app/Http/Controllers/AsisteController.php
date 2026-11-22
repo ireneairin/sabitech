@@ -15,10 +15,10 @@ class AsisteController extends Controller
         $charla = Charla::find($idCharla);
 
         if (!$charla) {
-            // Sin paréntesis (->asistentes): Laravel ejecuta la consulta y da los usuarios
             return response()->json(['mensaje' => 'Charla no encontrada'], 404);
         }
 
+        // Sin paréntesis (->asistentes): Laravel ejecuta la consulta y da los usuarios
         return response()->json(['data' => $charla->asistentes], 200);
     }
 

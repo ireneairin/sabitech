@@ -61,7 +61,7 @@ export default function HomeView({ usuario, onNavigate }) {
                     <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
                         <h3 style={{ color: '#2563eb', margin: '0 0 8px 0', fontSize: '1.1rem' }}><strong>Duración:</strong> 4 días | 13-16 Junio</h3>
                         <p style={{ color: '#64748b', fontSize: '0.95rem', margin: 0, lineHeight: '1.5' }}>
-                            Tres jornadas intensivas repletas de ponencias magistrales, debates y talleres prácticos.
+                            Cuatro jornadas intensivas repletas de ponencias magistrales, debates y talleres prácticos.
                         </p>
                     </div>
 
@@ -74,7 +74,7 @@ export default function HomeView({ usuario, onNavigate }) {
                 </div>
 
                 <p style={{ fontSize: '0.95rem', color: '#64748b', margin: 0, fontStyle: 'italic' }}>
-                    ¡Reserva ya tu plaza en las ponencias que más te interesen desde el catálogo y asegura tu asistencia en Sabitech 2026!
+                    ¡Reserva ya tu plaza en las ponencias que más te interesen desde el catálogo y asegura tu asistencia en Sabitech 2027!
                 </p>
             </div>
 
