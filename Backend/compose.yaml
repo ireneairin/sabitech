@@ -20,9 +20,11 @@ services:
   
   frontend:
     container_name: frontend
-    build: .
+    build:
+      context: ../Frontend
+      dockerfile: Dockerfile
     ports:
-      - "127.0.0.1:5173:5173"
+      - "127.0.0.1:5173:80"
     environment:
       - API_DESTINO=http://web:80
     volumes:
